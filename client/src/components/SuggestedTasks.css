@@ -66,31 +66,3 @@
       padding: 10px;
     }
   }
-
-.task-controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.task-search {
-  flex-grow: 1;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.task-sort {
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: white;
-}
-
-.no-tasks {
-  color: #666;
-  font-style: italic;
-}
