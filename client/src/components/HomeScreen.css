@@ -1,0 +1,70 @@
+:root {
+    --primary-blue: #3498db;
+    --dark-blue: #2980b9;
+    --light-blue: #ebf5fb;
+  }
+  
+  .home-screen {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .home-screen header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--light-blue);
+    border-radius: 8px;
+  }
+  
+  .home-screen h1 {
+    margin: 0;
+    color: var(--dark-blue);
+  }
+  
+  .sign-out-btn {
+    padding: 10px 20px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sign-out-btn:hover {
+    background-color: var(--dark-blue);
+  }
+  
+  .main-nav {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .main-nav button {
+    padding: 10px 20px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .main-nav button:hover,
+  .main-nav button.active {
+    background-color: var(--dark-blue);
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    background-color: #fadbd8;
+    border: 1px solid #f5b7b1;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }

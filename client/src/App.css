@@ -1,0 +1,7 @@
+.App {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }

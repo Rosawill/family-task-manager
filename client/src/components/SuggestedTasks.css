@@ -1,0 +1,68 @@
+.suggested-tasks {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .suggested-tasks h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  .suggested-tasks p {
+    color: #7f8c8d;
+    font-style: italic;
+  }
+  
+  .suggested-tasks ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .suggested-task-item {
+    background-color: #e8f5fd;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .suggested-task-item:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .suggested-task-item h3 {
+    color: #2980b9;
+    margin: 0 0 10px 0;
+  }
+  
+  .suggested-task-item p {
+    color: #34495e;
+    margin: 0 0 15px 0;
+  }
+  
+  .suggested-task-item button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .suggested-task-item button:hover {
+    background-color: #2980b9;
+  }
+  
+  @media (max-width: 600px) {
+    .suggested-tasks {
+      padding: 15px;
+    }
+  
+    .suggested-task-item {
+      padding: 10px;
+    }
+  }
