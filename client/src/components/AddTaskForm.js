@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import Popup from './Popup';
 
 function AddTaskForm({ familyId, onTaskAdded }) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [popup, setPopup] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, 'tasks'), {
-        name,
-        description,
-        familyId,
-        status: 'Pending'
-      });
-      setName('');
-      setDescription('');
-      onTaskAdded();
-      alert('Task added successfully!');
+      const newTask = {
+        name: taskName,
+        description: taskDescription,
+        status: 'Pending',
+        familyId: familyId
+      };
+      const docRef = await addDoc(collection(db, 'tasks'), newTask);
+      onTaskAdded();  // Call the function without parameters
+      setTaskName('');
+      setTaskDescription('');
+      setPopup({ message: 'Task added successfully!', isError: false });
     } catch (error) {
       console.error('Error adding task:', error);
-      alert('Failed to add task. Please try again.');
+      setPopup({ message: `Failed to add task. Error: ${error.message}`, isError: true });
     }
   };
 
@@ -30,18 +33,25 @@ function AddTaskForm({ familyId, onTaskAdded }) {
       <h2>Add New Task</h2>
       <input
         type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={taskName}
+        onChange={(e) => setTaskName(e.target.value)}
         placeholder="Task Name"
         required
       />
       <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value={taskDescription}
+        onChange={(e) => setTaskDescription(e.target.value)}
         placeholder="Task Description"
         required
       />
       <button type="submit">Add Task</button>
+      {popup && (
+        <Popup
+          message={popup.message}
+          isError={popup.isError}
+          onClose={() => setPopup(null)}
+        />
+      )}
     </form>
   );
 }

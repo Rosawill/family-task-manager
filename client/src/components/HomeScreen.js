@@ -12,7 +12,6 @@ function HomeScreen({ onSignOut }) {
   const [familyId, setFamilyId] = useState('');
   const [tasks, setTasks] = useState([]);
   const [view, setView] = useState('tasks');
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,14 +27,11 @@ function HomeScreen({ onSignOut }) {
           const userData = userDoc.data();
           setFirstName(userData.firstName);
           setFamilyId(userData.familyId);
-          fetchTasks(userData.familyId);
-        } else {
-          setError('User data not found. Please sign out and sign in again.');
+          await fetchTasks(userData.familyId);
         }
       }
     } catch (err) {
       console.error('Error fetching user data:', err);
-      setError('Failed to load user data. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -49,7 +45,6 @@ function HomeScreen({ onSignOut }) {
       setTasks(taskList);
     } catch (err) {
       console.error('Error fetching tasks:', err);
-      setError('Failed to load tasks. Please try again later.');
     }
   };
 
@@ -59,12 +54,11 @@ function HomeScreen({ onSignOut }) {
       onSignOut();
     } catch (error) {
       console.error('Error signing out:', error);
-      setError('Failed to sign out. Please try again.');
     }
   };
 
-  const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask]);
+  const handleTasksUpdated = () => {
+    fetchTasks(familyId);
   };
 
   if (loading) {
@@ -77,22 +71,16 @@ function HomeScreen({ onSignOut }) {
         <h1>Hello, {firstName || auth.currentUser?.email || 'User'}!</h1>
         <button onClick={handleSignOut} className="sign-out-btn">Sign Out</button>
       </header>
-      {error ? (
-        <div className="error-message">{error}</div>
-      ) : (
-        <>
-          <nav className="main-nav">
-            <button onClick={() => setView('tasks')} className={view === 'tasks' ? 'active' : ''}>Task List</button>
-            <button onClick={() => setView('suggested')} className={view === 'suggested' ? 'active' : ''}>Suggested Tasks</button>
-            <button onClick={() => setView('add')} className={view === 'add' ? 'active' : ''}>Add Task</button>
-          </nav>
-          <main>
-            {view === 'tasks' && <TaskList tasks={tasks} familyId={familyId} />}
-            {view === 'suggested' && <SuggestedTasks familyId={familyId} onAddTask={handleAddTask} />}
-            {view === 'add' && <AddTaskForm familyId={familyId} onAddTask={handleAddTask} />}
-          </main>
-        </>
-      )}
+      <nav className="main-nav">
+        <button onClick={() => setView('tasks')} className={view === 'tasks' ? 'active' : ''}>Task List</button>
+        <button onClick={() => setView('suggested')} className={view === 'suggested' ? 'active' : ''}>Suggested Tasks</button>
+        <button onClick={() => setView('add')} className={view === 'add' ? 'active' : ''}>Add Task</button>
+      </nav>
+      <main>
+        {view === 'tasks' && <TaskList tasks={tasks} onTasksUpdated={handleTasksUpdated} />}
+        {view === 'suggested' && <SuggestedTasks familyId={familyId} onTasksUpdated={handleTasksUpdated} />}
+        {view === 'add' && <AddTaskForm familyId={familyId} onTaskAdded={handleTasksUpdated} />}
+      </main>
     </div>
   );
 }
